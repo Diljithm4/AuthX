@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f7f6;
+            margin: 0;
+        }
+        .timer-container {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            text-align: center;
+        }
+        .timer {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .logout-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .logout-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="timer-container">
+        <div class="timer" id="timer">05:00</div>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // 5-minute countdown
+        let timeLeft = 300; // 5 minutes in seconds
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes < 10 ? '0' + minutes : minutes}:${remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds}`;
+        }
+
+        function updateTimer() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                document.getElementById('timer').innerText = formatTime(timeLeft);
+            } else {
+                alert('Time is up!');
+                // You can redirect to another page or take any action when the timer ends
+            }
+        }
+
+        // Start the countdown
+        setInterval(updateTimer, 1000);
+
+        // Logout function (clear token and redirect to login page)
+        function logout() {
+            localStorage.removeItem('jwt_token'); // Remove the JWT token
+            window.location.href = '/auth/login/'; // Redirect to the login page
+        }
+    </script>
+</body>
+</html>
